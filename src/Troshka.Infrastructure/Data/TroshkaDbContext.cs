@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Troshka.Domain.Entities.OwnerAggregate;
 using Troshka.Domain.Entities.VehicleAggregate;
 
 namespace Troshka.Infrastructure.Data
@@ -14,8 +15,24 @@ namespace Troshka.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<VehicleEntity>();
+                .Entity<VehicleEntity>()
+                .ToTable("Vehicles");
 
+            modelBuilder
+                .Entity<VehicleCategoryEntity>()
+                .ToTable("Categories");
+
+            modelBuilder
+                .Entity<VehicleBrandEntity>()
+                .ToTable("Brands");
+
+            modelBuilder
+                .Entity<VehicleModelEntity>()
+                .ToTable("Models");
+
+            modelBuilder
+                .Entity<OwnerEntity>()
+                .ToTable("Owners");
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

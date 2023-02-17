@@ -1,13 +1,14 @@
-﻿namespace Troshka.Domain.Entities.VehicleAggregate
+﻿using Troshka.Domain.Entities.OwnerAggregate;
+
+namespace Troshka.Domain.Entities.VehicleAggregate
 {
     public class VehicleEntity : BaseEntity
     {
         // Owner
-        public string DisplayName { get; set; }
-        public string Phone { get; set; }
-        public bool IsDisplayNameVisible { get; set; }
+        public string OwnerId { get; set; }
+        public virtual OwnerEntity Owner { get; set; }
+        public virtual VehicleCategoryEntity Category { get; set; }
         public int HorsePowers { get; set; }
-        public string Category { get; set; }
         public int Mileage { get; set; }
         public string Engine { get; set; }
         public int Euro { get; set; }

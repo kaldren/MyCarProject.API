@@ -1,8 +1,9 @@
 ﻿namespace Troshka.Domain.Entities.VehicleAggregate
 {
-    // Ex: Automobile, motorcycle, truck...
-    public class VehicleType : BaseEntity
+    public class VehicleModelEntity : BaseEntity
     {
         public string Name { get; set; }
+
+        public VehicleBrandEntity Brand { get; set; }
     }
 }
