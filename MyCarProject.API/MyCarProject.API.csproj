@@ -9,15 +9,35 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="1.24.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.26.0" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.26.0" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.16.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\Request\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyCarProject.Infrastructure\MyCarProject.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

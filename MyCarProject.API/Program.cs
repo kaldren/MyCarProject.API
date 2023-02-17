@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.OData;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using MyCarProject.Infrastructure.Data;
 using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,10 @@ builder.Services.AddResponseCompression(options =>
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"))
+    .EnableTokenAcquisitionToCallDownstreamApi()
+    .AddMicrosoftGraph(builder.Configuration.GetSection("GraphApi"))
+    .AddInMemoryTokenCaches();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,9 +28,9 @@ builder.Services.AddSwaggerGen();
 // CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOnebrbSPA", policy =>
+    options.AddPolicy("AllowMyCarProjectSPA", policy =>
     {
-        policy.WithOrigins(builder.Configuration.GetValue<string>("Onebrb:SPAClient:Domain"))
+        policy.WithOrigins(builder.Configuration.GetValue<string>("MyCarProject:SPAClient:Domain"))
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials();
@@ -33,7 +38,17 @@ builder.Services.AddCors(options =>
 });
 
 // ODATA
-builder.Services.AddODataQueryFilter();
+builder.Services.AddControllers().AddOData(opt => opt.Count().Filter().Expand().Select().OrderBy().SetMaxTop(10));
+
+// Data
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContext<MyCarProjectDbContext>(options =>
+{
+    options.UseLazyLoadingProxies();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyCarProjectContext"));
+    //options.UseNpgsql(builder.Configuration.GetValue<string>("ConnectionStrings:MyCarProjectContext"));
+    //options.UseInMemoryDatabase("MyCarProject");
+});
 
 var app = builder.Build();
 
@@ -48,7 +63,7 @@ if (app.Environment.IsDevelopment())
 
     //app.UseMigrationsEndPoint();
 
-    //bool initData = builder.Configuration.GetValue<bool>("Onebrb:Azure:Database:InitData");
+    //bool initData = builder.Configuration.GetValue<bool>("MyCarProject:Azure:Database:InitData");
 
     //if (initData)
     //{
@@ -60,7 +75,7 @@ if (app.Environment.IsDevelopment())
     //        var logger = loggerFactory.CreateLogger<ILogger>();
 
     //        logger.LogDebug("Seeding data...");
-    //        var context = services.GetRequiredService<OnebrbDbContext>();
+    //        var context = services.GetRequiredService<MyCarProjectDbContext>();
     //        //context.Database.EnsureDeleted();
     //        context.Database.EnsureCreated();
     //        DbInitializer.Initialize(context, logger);
@@ -102,7 +117,7 @@ else
 }
 
 
-app.UseCors(options => options.WithOrigins(builder.Configuration.GetValue<string>("Onebrb:SPAClient:Domain")).AllowAnyMethod().AllowAnyHeader());
+app.UseCors(options => options.WithOrigins(builder.Configuration.GetValue<string>("MyCarProject:SPAClient:Domain")).AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
