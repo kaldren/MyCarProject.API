@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.OData;
 using Microsoft.Identity.Web;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -30,6 +31,9 @@ builder.Services.AddCors(options =>
         .AllowCredentials();
     });
 });
+
+// ODATA
+builder.Services.AddODataQueryFilter();
 
 var app = builder.Build();
 

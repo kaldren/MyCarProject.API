@@ -2,9 +2,6 @@
 {
     public class VehicleEquipment
     {
-        public string ExteriorColor { get; set; }
-        public string InteriorColor { get; set; }
-        public string InteriorMaterial { get; set; }
         public bool HasABS { get; set; }
         public bool HasESP { get; set; }
         public bool HasASR { get; set; }
@@ -34,7 +31,7 @@
         public bool HasHighBeamAssist { get; set; }
         public bool HasAdaptiveCorneringLights { get; set; }
         public bool HasAdaptiveLighting { get; set; }
-        public bool HasFogLamp { get; set; }
+        public bool HasFogLamps { get; set; }
         public bool HasAlarm { get; set; }
         public bool HasEngineImobilizer { get; set; }
 
@@ -44,10 +41,10 @@
         public bool HasHeatedWindshield { get; set; }
         public bool HasHeatedSteeringWheel { get; set; }
         public bool HasSelfSteeringSystems { get; set; }
-        public bool HasFrontParkAssistent { get; set; }
-        public bool HasRearParkAssistent { get; set; }
-        public bool HasCameraAssistent { get; set; }
-        public bool Has360DegreeCameraAssistent { get; set; }
+        public bool HasFrontParkAssistant { get; set; }
+        public bool HasRearParkAssistant { get; set; }
+        public bool HasCameraAssistant { get; set; }
+        public bool Has360DegreeCameraAssistant { get; set; }
         public bool HasFrontHeatedSeats { get; set; }
         public bool HasBackHeatedSeats { get; set; }
         public bool HasFrontAdjustableSeats { get; set; }

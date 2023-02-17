@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
+using MyCarProject.API.Models;
 using MyCarProject.API.Models.Response.Vehicle;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,14 +27,58 @@ namespace MyCarProject.API.Controllers
         {
             Thread.Sleep(150);
 
-            return Ok(new VehicleResponseModel
+            var vehicle = new VehicleResponseModel
             {
-                Id = 1436623,
-                Brand = "Audi",
-                Model = "A6",
-                Year = 2012,
-                Description = "Some car",
-            });
+                TechnicalSpecification = new VehicleSpecification
+                {
+                    Brand = "Audi",
+                    Category = "Лек автомобил",
+                    Color = "Черен",
+                    Description = "\r\nПЕРФЕКТНО ТЕХНИЧЕСКО СЪСТОЯНИЕ - облужена на 125 000 км. + нови преди и задна накладки, подгряване и обдухване + памет на предни и задни дедалки, Серво затваряне на врати и багажник, Седалки Panamera Turbo с Finna Nappa кожа, Табло и врати с Finna Nappa кожа, Безключов достъп и запалвне, BOSE музика, Пияно лак пакет, Алкантара таван, 360 градуса камери към парктроника, 19 цола оригинални джанти със зимни гуми и летни гуми, Печка, Летни стелки оригинални, Два ключа + дистанционно за печката, ВЪЗМОЖЕН СОБСТВЕН ЛИЗИНГ ЗА КЛИЕНТИ НА АГРО ХАУС БУРГАС, РАМА: WP0ZZZ97ZHL131627Amazing car, must see!",
+                    Doors = "4(5)",
+                    Engine = "Дизел",
+                    Euro = 6,
+                    FirstRegistration = DateTime.Now.AddYears(-6),
+                    InteriorColor = "Син",
+                    InteriorMaterial = "Алкантара",
+                    IsRegistered = true,
+                    Mileage = 195000,
+                    Model = "A6",
+                    Price = 24500,
+                    Seats = 5,
+                    Transmission = "Автоматик",
+                    Year = 2015
+                },
+                Equipment = new VehicleEquipment
+                {
+                    Has360DegreeCameraAssistant = true,
+                    HasABS = true,
+                    HasAdaptiveCorneringLights = true,
+                    HasAdaptiveCruiseControl = true,
+                    HasAdaptiveLighting = true,
+                    HasAirConditioner = true,
+                    HasAlarm = true,
+                    HasAllSeasonTires = true,
+                    HasAndroidAuto = true,
+                    HasBackAdjustableSeats = true,
+                    HasBackHeatedSeats = true,
+                    HasBluetooth = true,
+                    HasCameraAssistant = true,
+                    HasCentralLocking = true,
+                    HasClimateControl = true,
+                    HasCruiseControl = true,
+                    HasBlindSpotAssist = true,
+                    HasDriverAirbag = true,
+                    HasEmergencyBrakeAssist = true,
+                    HasHeadupDisplay = true,
+                    HasKeylessCentralLocking = true,
+                    HasMassageSeats = true,
+                    HasPanoramicRoof = true,
+                    HasXenonHeadlights = true,
+                }
+            };
+
+            return Ok(vehicle);
         }
 
         /// <summary>
@@ -78,6 +123,5 @@ namespace MyCarProject.API.Controllers
                 Phone = "0888 77 88 77"
             });
         }
-
     }
 }
