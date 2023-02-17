@@ -23,6 +23,19 @@ namespace Troshka.Infrastructure.Data
                 .ToTable("Categories");
 
             modelBuilder
+                .Entity<VehicleCategoryEntity>()
+                .HasData(
+                    new VehicleCategoryEntity { Name = "Cars" },
+                    new VehicleCategoryEntity { Name = "Buses" },
+                    new VehicleCategoryEntity { Name = "Motorcycles" },
+                    new VehicleCategoryEntity { Name = "Trucks" },
+                    new VehicleCategoryEntity { Name = "Caravans" },
+                    new VehicleCategoryEntity { Name = "Boats" },
+                    new VehicleCategoryEntity { Name = "Construction" },
+                    new VehicleCategoryEntity { Name = "Agriciltural" }
+                );
+
+            modelBuilder
                 .Entity<VehicleBrandEntity>()
                 .ToTable("Brands");
 

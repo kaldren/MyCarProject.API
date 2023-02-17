@@ -1,4 +1,5 @@
-﻿using Troshka.Domain.Interfaces;
+﻿using shortid;
+using Troshka.Domain.Interfaces;
 
 namespace Troshka.Domain.Entities.VehicleAggregate
 {
@@ -7,7 +8,7 @@ namespace Troshka.Domain.Entities.VehicleAggregate
         /// <summary>
         /// Gets or sets the entity id property
         /// </summary>
-        public string Id { get; set; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Split('=')[0]; // Shorter guid
+        public string Id { get; set; } = ShortId.Generate();
 
         /// <summary>
         /// Gets or sets the entity IsDeleted property

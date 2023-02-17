@@ -113,6 +113,72 @@ namespace Troshka.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "bc_KpKlapX_q",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2665), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Cars",
+                            TrackId = "b507ead3-6d90-4646-8b54-e3ac95bc97bf"
+                        },
+                        new
+                        {
+                            Id = "DWsRuHgNKycU",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2673), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Buses",
+                            TrackId = "404afcf4-f89a-45d3-806c-3a78b5b3aa81"
+                        },
+                        new
+                        {
+                            Id = "VRqeN-nn",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2677), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Motorcycles",
+                            TrackId = "720c2d15-e779-4a8b-acaa-7b383ee0fec7"
+                        },
+                        new
+                        {
+                            Id = "K_jDvK-uGpug",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2682), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Trucks",
+                            TrackId = "4a22860e-d1e6-458d-916f-09ee1c4523b8"
+                        },
+                        new
+                        {
+                            Id = "hLobnwwIjtEX",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2687), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Caravans",
+                            TrackId = "7925a525-0823-416f-a256-a412b169de53"
+                        },
+                        new
+                        {
+                            Id = "raECclCDG",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2717), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Boats",
+                            TrackId = "3ab7b6a6-7549-4e1a-90d6-446a7aefe37a"
+                        },
+                        new
+                        {
+                            Id = "gP--hcxsYl",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2722), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Construction",
+                            TrackId = "b40704b5-9c81-4c94-b940-4f7a6b4e616b"
+                        },
+                        new
+                        {
+                            Id = "LYEMPyYyP",
+                            DateCreated = new DateTimeOffset(new DateTime(2023, 2, 17, 17, 1, 52, 503, DateTimeKind.Unspecified).AddTicks(2726), new TimeSpan(0, 0, 0, 0, 0)),
+                            IsDeleted = false,
+                            Name = "Agriciltural",
+                            TrackId = "f234e706-19b0-4057-8a40-42499faf83cc"
+                        });
                 });
 
             modelBuilder.Entity("Troshka.Domain.Entities.VehicleAggregate.VehicleEntity", b =>
