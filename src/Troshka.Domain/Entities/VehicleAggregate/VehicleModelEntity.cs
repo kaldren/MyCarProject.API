@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
 
-        public VehicleBrandEntity Brand { get; set; }
+        public virtual VehicleBrandEntity Brand { get; set; }
     }
 }

@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
 
-        public ICollection<VehicleModelEntity> Models { get; set; }
+        public virtual ICollection<VehicleModelEntity> Models { get; set; }
     }
 }
