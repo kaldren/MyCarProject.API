@@ -5,7 +5,7 @@
         public string Name { get; set; }
 
         public string CategoryId { get; set; }
-        public virtual VehicleCategoryEntity Category { get; set; }
+        public virtual CategoryEntity Category { get; set; }
 
         public virtual ICollection<VehicleModelEntity> Models { get; set; }
     }

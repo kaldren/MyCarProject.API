@@ -7,7 +7,7 @@ namespace Troshka.Domain.Entities.VehicleAggregate
         // Owner
         public string OwnerId { get; set; }
         public virtual OwnerEntity Owner { get; set; }
-        public virtual VehicleCategoryEntity Category { get; set; }
+        public virtual CategoryEntity Category { get; set; }
         public int HorsePowers { get; set; }
         public int Mileage { get; set; }
         public string Engine { get; set; }
