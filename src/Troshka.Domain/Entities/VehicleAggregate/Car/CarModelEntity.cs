@@ -1,6 +1,6 @@
 ﻿namespace Troshka.Domain.Entities.VehicleAggregate.Car
 {
-    public class CarModelEntity
+    public class CarModelEntity : BaseEntity
     {
         public string Name { get; set; }
         public string CarBrandId { get; set; }
