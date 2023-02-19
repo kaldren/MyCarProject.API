@@ -14,11 +14,21 @@ namespace Troshka.Infrastructure.Data
         }
 
         public DbSet<CategoryEntity> Category { get; set; }
+
+        #region Cars
         public DbSet<CarBrandEntity> CarBrand { get; set; }
+        public DbSet<CarColorEntity> CarColor { get; set; }
+        public DbSet<CarDoorsEntity> CarDoors { get; set; }
+        public DbSet<CarEngineEntity> CarEngine { get; set; }
         public DbSet<CarEquipmentEntity> CarEquipment { get; set; }
+        public DbSet<CarEuroStandardEntity> CarEuroStandard { get; set; }
+        public DbSet<CarInteriorMaterial> CarInteriorMaterial { get; set; }
         public DbSet<CarModelEntity> CarModel { get; set; }
         public DbSet<CarOfferEntity> CarOffer { get; set; }
+        public DbSet<CarSeatsEntity> CarSeats { get; set; }
         public DbSet<CarSpecificationEntity> CarSpecification { get; set; }
+        public DbSet<CarTransmissionEntity> CarTransmission { get; set; }
+        #endregion Cars
 
         public TroshkaDbContext(DbContextOptions<TroshkaDbContext> options) : base(options)
         {
@@ -44,6 +54,133 @@ namespace Troshka.Infrastructure.Data
                 );
 
             #region Cars
+            modelBuilder
+                .Entity<CarColorEntity>()
+                .ToTable("Colors", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarColorEntity>()
+                .HasData(
+                    new CarColorEntity { Name = "Dark blue" },
+                    new CarColorEntity { Name = "Banana" },
+                    new CarColorEntity { Name = "Beata" },
+                    new CarColorEntity { Name = "Beige" },
+                    new CarColorEntity { Name = "Bordeaux" },
+                    new CarColorEntity { Name = "Bronze" },
+                    new CarColorEntity { Name = "White" },
+                    new CarColorEntity { Name = "Guilty" },
+                    new CarColorEntity { Name = "Violetov" },
+                    new CarColorEntity { Name = "Sour Cherry" },
+                    new CarColorEntity { Name = "Graphite" },
+                    new CarColorEntity { Name = "Yellow" },
+                    new CarColorEntity { Name = "Green" },
+                    new CarColorEntity { Name = "Golden" },
+                    new CarColorEntity { Name = "Brown" },
+                    new CarColorEntity { Name = "Tiled" },
+                    new CarColorEntity { Name = "Creamy" },
+                    new CarColorEntity { Name = "Purple" },
+                    new CarColorEntity { Name = "Metallic" },
+                    new CarColorEntity { Name = "Orange" },
+                    new CarColorEntity { Name = "Ocher" },
+                    new CarColorEntity { Name = "Ashen" },
+                    new CarColorEntity { Name = "Pearl" },
+                    new CarColorEntity { Name = "Sandy" },
+                    new CarColorEntity { Name = "Residual" },
+                    new CarColorEntity { Name = "Pink" },
+                    new CarColorEntity { Name = "Sahara" },
+                    new CarColorEntity { Name = "Light Grey" },
+                    new CarColorEntity { Name = "Light blue" },
+                    new CarColorEntity { Name = "Grey" },
+                    new CarColorEntity { Name = "Son" },
+                    new CarColorEntity { Name = "Ivory" },
+                    new CarColorEntity { Name = "Silver" },
+                    new CarColorEntity { Name = "Dark green" },
+                    new CarColorEntity { Name = "Dark gray" },
+                    new CarColorEntity { Name = "Dark blue metallic" },
+                    new CarColorEntity { Name = "Dark red" },
+                    new CarColorEntity { Name = "Tobacco" },
+                    new CarColorEntity { Name = "Chameleon" },
+                    new CarColorEntity { Name = "Red" },
+                    new CarColorEntity { Name = "Black" }
+                );
+
+            modelBuilder
+                .Entity<CarDoorsEntity>()
+                .ToTable("Doors", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarDoorsEntity>()
+                .HasData(
+                    new CarDoorsEntity { Name = "2/3" },
+                    new CarDoorsEntity { Name = "4/5" }
+                );
+
+            modelBuilder
+                .Entity<CarEngineEntity>()
+                .ToTable("Engines", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarEngineEntity>()
+                .HasData(
+                    new CarEngineEntity { Name = "Gasoline" },
+                    new CarEngineEntity { Name = "Diesel" },
+                    new CarEngineEntity { Name = "Electric" },
+                    new CarEngineEntity { Name = "Hybrid" },
+                    new CarEngineEntity { Name = "Plug-in hybrid" }
+                );
+
+            modelBuilder
+                .Entity<CarEuroStandardEntity>()
+                .ToTable("EuroStandards", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarEuroStandardEntity>()
+                .HasData(
+                    new CarEuroStandardEntity { Name = "Euro 1" },
+                    new CarEuroStandardEntity { Name = "Euro 2" },
+                    new CarEuroStandardEntity { Name = "Euro 3" },
+                    new CarEuroStandardEntity { Name = "Euro 4" },
+                    new CarEuroStandardEntity { Name = "Euro 5" },
+                    new CarEuroStandardEntity { Name = "Euro 6" },
+                    new CarEuroStandardEntity { Name = "Euro 7" }
+                );
+
+            modelBuilder
+                .Entity<CarSeatsEntity>()
+                .ToTable("Seats", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarSeatsEntity>()
+                .HasData(
+                    new CarSeatsEntity { Value = 5 },
+                    new CarSeatsEntity { Value = 7 }
+                );
+
+
+            modelBuilder
+                .Entity<CarTransmissionEntity>()
+                .ToTable("Transmissions", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarTransmissionEntity>()
+                .HasData(
+                    new CarTransmissionEntity { Name = "Automatic" },
+                    new CarTransmissionEntity { Name = "Semi-automatic" },
+                    new CarTransmissionEntity { Name = "Manual" }
+                );
+
+            modelBuilder
+                .Entity<CarInteriorMaterial>()
+                .ToTable("Interior", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarInteriorMaterial>()
+                .HasData(
+                    new CarInteriorMaterial { Name = "Velour" },
+                    new CarInteriorMaterial { Name = "Leather" },
+                    new CarInteriorMaterial { Name = "Textile" }
+                );
+
             modelBuilder
                 .Entity<CarOfferEntity>()
                 .ToTable("Offers", schema: SchemaNames.Cars);

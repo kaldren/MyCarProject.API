@@ -8,8 +8,16 @@ public static class DbInitializer
 {
     public static void Initialize(TroshkaDbContext TroshkaDbContext, ILogger logger)
     {
-        var audiBrandAudi = TroshkaDbContext.CarBrand.SingleOrDefault(p => p.Name == "Audi");
-        var audiModelA6 = TroshkaDbContext.CarModel.SingleOrDefault(p => p.Name == "A6");
+        var audiBrandAudi = TroshkaDbContext.CarBrand.Single(p => p.Name == "Audi");
+        var audiModelA6 = TroshkaDbContext.CarModel.Single(p => p.Name == "A6");
+        var engine = TroshkaDbContext.CarEngine.Single(p => p.Name == "Diesel");
+        var euroStandard = TroshkaDbContext.CarEuroStandard.Single(p => p.Name == "Euro 6");
+        var color = TroshkaDbContext.CarColor.Single(p => p.Name == "Black");
+        var doors = TroshkaDbContext.CarDoors.Single(p => p.Name == "4/5");
+        var seats = TroshkaDbContext.CarSeats.Single(p => p.Value == 5);
+        var interiorMaterial = TroshkaDbContext.CarInteriorMaterial.Single(p => p.Name == "Leather");
+        var interiorColor = TroshkaDbContext.CarColor.Single(p => p.Name == "Black");
+        var transmission = TroshkaDbContext.CarTransmission.Single(p => p.Name == "Automatic");
 
         // Create one car offer
         var offer = new CarOfferEntity
@@ -27,18 +35,19 @@ public static class DbInitializer
             {
                 HorsePowers = 245,
                 Mileage = 150000,
-                Engine = "Diesel",
-                Euro = 6,
-                Color = "Black",
-                Seats = 7,
-                Doors = "4/5",
+                Engine = engine,
+                Euro = euroStandard,
+                Color = color,
+                Seats = seats,
+                Doors = doors,
                 BrandId = audiBrandAudi.Id,
                 ModelId = audiModelA6.Id,
                 Year = 2014,
                 FirstRegistration = DateTimeOffset.UtcNow.AddYears(-8),
                 IsRegistered = true,
-                InteriorMaterial = "Leather",
-                InteriorColor = "Black"
+                InteriorMaterial = interiorMaterial,
+                InteriorColor = interiorColor,
+                Transmission = transmission
             },
             Equipment = new CarEquipmentEntity
             {
