@@ -7,17 +7,28 @@ namespace Troshka.Infrastructure.Data
 {
     public class TroshkaDbContext : DbContext
     {
+        private static class SchemaNames
+        {
+            public const string Troshka = $"{nameof(Troshka)}";
+            public const string Cars = $"{nameof(Cars)}";
+        }
+
+        public DbSet<CategoryEntity> Category { get; set; }
+        public DbSet<CarBrandEntity> CarBrand { get; set; }
+        public DbSet<CarEquipmentEntity> CarEquipment { get; set; }
+        public DbSet<CarModelEntity> CarModel { get; set; }
+        public DbSet<CarOfferEntity> CarOffer { get; set; }
+        public DbSet<CarSpecificationEntity> CarSpecification { get; set; }
+
         public TroshkaDbContext(DbContextOptions<TroshkaDbContext> options) : base(options)
         {
         }
-
-        public DbSet<VehicleEntity> Vehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Entity<CategoryEntity>()
-                .ToTable("Categories");
+                .ToTable("Categories", schema: SchemaNames.Troshka);
 
             modelBuilder
                 .Entity<CategoryEntity>()
@@ -34,8 +45,20 @@ namespace Troshka.Infrastructure.Data
 
             #region Cars
             modelBuilder
+                .Entity<CarOfferEntity>()
+                .ToTable("Offers", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarSpecificationEntity>()
+                .ToTable("Specifications", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarEquipmentEntity>()
+                .ToTable("Equipment", schema: SchemaNames.Cars);
+
+            modelBuilder
                 .Entity<CarBrandEntity>()
-                .ToTable("CarBrands");
+                .ToTable("Brands", schema: SchemaNames.Cars);
 
             modelBuilder
                 .Entity<CarBrandEntity>()
@@ -198,7 +221,7 @@ namespace Troshka.Infrastructure.Data
 
             modelBuilder
                 .Entity<CarModelEntity>()
-                .ToTable("CarModels");
+                .ToTable("Models", schema: SchemaNames.Cars);
 
             modelBuilder
                 .Entity<CarModelEntity>()
@@ -2556,12 +2579,8 @@ namespace Troshka.Infrastructure.Data
             #endregion Motorcycles
 
             modelBuilder
-                .Entity<VehicleModelEntity>()
-                .ToTable("Models");
-
-            modelBuilder
                 .Entity<OwnerEntity>()
-                .ToTable("Owners");
+                .ToTable("Owners", schema: SchemaNames.Troshka);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

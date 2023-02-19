@@ -1,30 +1,7 @@
-﻿using Troshka.Domain.Entities.OwnerAggregate;
-
-namespace Troshka.Domain.Entities.VehicleAggregate
+﻿namespace Troshka.Domain.Entities.VehicleAggregate.Car
 {
-    public class VehicleEntity : BaseEntity
+    public class CarEquipmentEntity : BaseEntity
     {
-        // Owner
-        public string OwnerId { get; set; }
-        public virtual OwnerEntity Owner { get; set; }
-        public virtual CategoryEntity Category { get; set; }
-        public int HorsePowers { get; set; }
-        public int Mileage { get; set; }
-        public string Engine { get; set; }
-        public int Euro { get; set; }
-        public string Transmission { get; set; }
-        public string Color { get; set; }
-        public int Seats { get; set; }
-        public string Doors { get; set; }
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public string Description { get; set; }
-        public DateTime FirstRegistration { get; set; }
-        public decimal Price { get; set; }
-        public bool IsRegistered { get; set; }
-        public string InteriorMaterial { get; set; }
-        public string InteriorColor { get; set; }
         public bool HasABS { get; set; }
         public bool HasESP { get; set; }
         public bool HasASR { get; set; }

@@ -68,27 +68,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 
-    //app.UseMigrationsEndPoint();
+    app.UseMigrationsEndPoint();
 
-    //bool initData = builder.Configuration.GetValue<bool>("Troshka:Azure:Database:InitData");
+    bool initData = builder.Configuration.GetValue<bool>("Troshka:Azure:Database:InitData");
 
-    //if (initData)
-    //{
-    //    using (var scope = app.Services.CreateScope())
-    //    {
-    //        var services = scope.ServiceProvider;
-    //        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    if (initData)
+    {
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
-    //        var logger = loggerFactory.CreateLogger<ILogger>();
+            var logger = loggerFactory.CreateLogger<ILogger>();
 
-    //        logger.LogDebug("Seeding data...");
-    //        var context = services.GetRequiredService<TroshkaDbContext>();
-    //        //context.Database.EnsureDeleted();
-    //        context.Database.EnsureCreated();
-    //        DbInitializer.Initialize(context, logger);
-    //        logger.LogDebug("Seed data inserted successfully...");
-    //    }
-    //}
+            logger.LogDebug("Seeding data...");
+            var context = services.GetRequiredService<TroshkaDbContext>();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            DbInitializer.Initialize(context, logger);
+            logger.LogDebug("Seed data inserted successfully...");
+        }
+    }
 }
 else
 {
