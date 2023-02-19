@@ -75,7 +75,7 @@ public static class DbInitializer
                 HasMassageSeats = true,
                 HasPanoramicRoof = true,
                 HasXenonHeadlights = true,
-            }
+            },
         };
 
         TroshkaDbContext.CarOffer.Add(offer);

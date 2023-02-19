@@ -66,12 +66,12 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
 // migrate any database changes on startup (includes initial db creation)
-using (var scope = app.Services.CreateScope())
-{
-    var dataContext = scope.ServiceProvider.GetRequiredService<TroshkaDbContext>();
-    dataContext.Database.EnsureDeleted();
-    dataContext.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dataContext = scope.ServiceProvider.GetRequiredService<TroshkaDbContext>();
+//    dataContext.Database.EnsureDeleted();
+//    dataContext.Database.Migrate();
+//}
 
 app.UseResponseCompression();
 
@@ -96,10 +96,10 @@ if (app.Environment.IsDevelopment())
             var logger = loggerFactory.CreateLogger<ILogger>();
 
             logger.LogDebug("Seeding data...");
-            var context = services.GetRequiredService<TroshkaDbContext>();
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
-            DbInitializer.Initialize(context, logger);
+            var dataContext = scope.ServiceProvider.GetRequiredService<TroshkaDbContext>();
+            dataContext.Database.EnsureDeleted();
+            dataContext.Database.Migrate();
+            DbInitializer.Initialize(dataContext, logger);
             logger.LogDebug("Seed data inserted successfully...");
         }
     }

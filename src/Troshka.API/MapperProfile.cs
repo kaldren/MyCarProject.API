@@ -1,31 +1,20 @@
-﻿//using AutoMapper;
-//using Troshka.API.Models;
-//using Troshka.API.Models.Car;
-//using Troshka.Domain.Entities.OwnerAggregate;
+﻿using AutoMapper;
+using Troshka.API.Models.Response.Offer;
+using Troshka.Application.Offer.Models;
 
-//namespace Troshka.API
-//{
-//    public class MapperProfile : Profile
-//    {
-//        public MapperProfile()
-//        {
-//            #region Car
-//            CreateMap<CarBrandEntity, CarBrandModel>();
-//            CreateMap<CarColorEntity, CarColorModel>();
-//            CreateMap<CarDoorsEntity, CarDoorsModel>();
-//            CreateMap<CarEngineEntity, CarEngineModel>();
-//            CreateMap<CarEquipmentEntity, CarEquipmentModel>();
-//            CreateMap<CarEuroStandardEntity, CarEuroStandardModel>();
-//            CreateMap<CarInteriorMaterialEntity, CarInteriorMaterialModel>();
-//            CreateMap<CarModelEntity, CarModelModel>();
-//            CreateMap<CarOfferEntity, CarOfferModel>();
-//            CreateMap<CarSeatsEntity, CarSeatsModel>();
-//            CreateMap<CarSpecificationEntity, CarSpecificationModel>();
-//            CreateMap<CarTransmissionEntity, CarTransmissionModel>();
-//            #endregion Car
-
-//            CreateMap<CategoryEntity, CategoryModel>();
-//            CreateMap<OwnerEntity, OwnerModel>();
-//        }
-//    }
-//}
+namespace Troshka.API
+{
+    public class MapperProfile : Profile
+    {
+        public MapperProfile()
+        {
+            #region Car
+            CreateMap<CarOfferModel, CarOfferResponseModel>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Specification.Brand.Name))
+                .ForMember(dest => dest.ModelName, opt => opt.MapFrom(src => src.Specification.Model.Name))
+                .ForMember(dest => dest.OwnerDisplayName, opt => opt.MapFrom(src => src.Owner.DisplayName));
+            #endregion Car
+        }
+    }
+}

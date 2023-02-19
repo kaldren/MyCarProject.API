@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using System.ComponentModel.DataAnnotations;
+using Troshka.API.Models.Response.Offer;
 using Troshka.Application.Offer.Models;
 using Troshka.Application.Offer.Queries.GetSingleCarOffer;
 
@@ -34,14 +35,14 @@ namespace Troshka.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<CarOfferModel>> GetCarOffer([FromRoute][Required] string offerId)
+        public async Task<ActionResult<CarOfferResponseModel>> GetCarOffer([FromRoute][Required] string offerId)
         {
             CarOfferModel offerModel = await _mediator.Send(new GetSingleCarOfferQuery() { OfferId = offerId });
 
             if (offerModel == null)
                 return NotFound();
 
-            return Ok(offerModel);
+            return Ok(_mapper.Map<CarOfferResponseModel>(offerModel));
         }
     }
 }
