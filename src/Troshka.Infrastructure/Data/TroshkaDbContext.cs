@@ -22,7 +22,7 @@ namespace Troshka.Infrastructure.Data
         public DbSet<CarEngineEntity> CarEngine { get; set; }
         public DbSet<CarEquipmentEntity> CarEquipment { get; set; }
         public DbSet<CarEuroStandardEntity> CarEuroStandard { get; set; }
-        public DbSet<CarInteriorMaterial> CarInteriorMaterial { get; set; }
+        public DbSet<CarInteriorMaterialEntity> CarInteriorMaterial { get; set; }
         public DbSet<CarModelEntity> CarModel { get; set; }
         public DbSet<CarOfferEntity> CarOffer { get; set; }
         public DbSet<CarSeatsEntity> CarSeats { get; set; }
@@ -170,15 +170,15 @@ namespace Troshka.Infrastructure.Data
                 );
 
             modelBuilder
-                .Entity<CarInteriorMaterial>()
+                .Entity<CarInteriorMaterialEntity>()
                 .ToTable("Interior", schema: SchemaNames.Cars);
 
             modelBuilder
-                .Entity<CarInteriorMaterial>()
+                .Entity<CarInteriorMaterialEntity>()
                 .HasData(
-                    new CarInteriorMaterial { Name = "Velour" },
-                    new CarInteriorMaterial { Name = "Leather" },
-                    new CarInteriorMaterial { Name = "Textile" }
+                    new CarInteriorMaterialEntity { Name = "Velour" },
+                    new CarInteriorMaterialEntity { Name = "Leather" },
+                    new CarInteriorMaterialEntity { Name = "Textile" }
                 );
 
             modelBuilder

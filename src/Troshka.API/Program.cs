@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Troshka.Application;
+using Troshka.Application.Interfaces;
 using Troshka.Infrastructure.Data;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -49,6 +51,17 @@ builder.Services.AddDbContext<TroshkaDbContext>(options =>
     //options.UseNpgsql(builder.Configuration.GetValue<string>("ConnectionStrings:TroshkaContext"));
     //options.UseInMemoryDatabase("Troshka");
 });
+
+// Application
+builder.Services.AddApplicationServices();
+
+// // DI
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(TroshkaGenericRepository<>));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddTransient<IAzureImageStoreService, AzureImageStoreService>();
+//builder.Services.AddTransient<IAzureQueueService, AzureQueueService>();
+//builder.Services.AddTransient<INotificationsService, NotificationsService>();
+//builder.Services.TryAddSingleton<IConnectionMultiplexerService, ConnectionMultiplexerService>();
 
 var app = builder.Build();
 

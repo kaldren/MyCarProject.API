@@ -13,7 +13,7 @@
         public virtual CarColorEntity Color { get; set; }
         public virtual CarSeatsEntity Seats { get; set; }
         public virtual CarDoorsEntity Doors { get; set; }
-        public virtual CarInteriorMaterial InteriorMaterial { get; set; }
+        public virtual CarInteriorMaterialEntity InteriorMaterial { get; set; }
         public virtual CarColorEntity InteriorColor { get; set; }
         public string BrandId { get; set; }
         public virtual CarBrandEntity Brand { get; set; }
