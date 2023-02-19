@@ -22,6 +22,7 @@ public static class DbInitializer
         // Create one car offer
         var offer = new CarOfferEntity
         {
+            Id = "f1UvWocGFJvouhTHCxd5",
             Title = "Audi A6 TDI QUATTRO",
             Price = 26500,
             Description = "Винаги обслужвано навреме. Реални километри. Проверка в сервиз по ваш избор!",
