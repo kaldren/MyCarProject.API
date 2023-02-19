@@ -15,7 +15,7 @@
         public string Model { get; set; }
         public int Year { get; set; }
         public string Description { get; set; }
-        public DateTime FirstRegistration { get; set; }
+        public string FirstRegistration { get; set; }
         public decimal Price { get; set; }
         public bool IsRegistered { get; set; }
         public string InteriorMaterial { get; set; }

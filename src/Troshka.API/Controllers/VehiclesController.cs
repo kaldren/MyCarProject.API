@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
+using System.ComponentModel.DataAnnotations;
 using Troshka.API.Models;
 using Troshka.API.Models.Response.Vehicle;
-using System.ComponentModel.DataAnnotations;
 
 namespace Troshka.API.Controllers
 {
@@ -38,7 +38,7 @@ namespace Troshka.API.Controllers
                     Doors = "4(5)",
                     Engine = "Дизел",
                     Euro = 6,
-                    FirstRegistration = DateTime.Now.AddYears(-6),
+                    FirstRegistration = DateTime.Now.AddYears(-6).ToString("yyyy MMMM"),
                     InteriorColor = "Син",
                     InteriorMaterial = "Алкантара",
                     IsRegistered = true,

@@ -6,7 +6,7 @@
         public int HorsePowers { get; set; }
         public int Mileage { get; set; }
         public bool IsRegistered { get; set; }
-        public DateTimeOffset FirstRegistration { get; set; }
+        public string FirstRegistration { get; set; }
         public CarEngineModel Engine { get; set; }
         public CarEuroStandardModel Euro { get; set; }
         public CarTransmissionModel Transmission { get; set; }

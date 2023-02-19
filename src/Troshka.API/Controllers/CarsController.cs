@@ -44,5 +44,25 @@ namespace Troshka.API.Controllers
 
             return Ok(_mapper.Map<CarOfferResponseModel>(offerModel));
         }
+
+        /// <summary>
+        /// Get offer images by <paramref name="offerId"/>
+        /// </summary>
+        /// <param name="offerId">The Id of the offer</param>
+        /// <returns>The offer</returns>
+        [HttpGet("{offerId}/images")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarOfferImagesResponseModel>>> GetCarOfferImages([FromRoute][Required] string offerId)
+        {
+            return Ok(new List<CarOfferImagesResponseModel>
+            {
+                new CarOfferImagesResponseModel { ImageUrl = "https://www.topgear.com/sites/default/files/images/cars-road-test/2020/10/b75822a12266632af610f622fab9525d/audiuk00028059_audi_a6_saloon_50_tfsi_e_.jpg"},
+                new CarOfferImagesResponseModel { ImageUrl = "https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_cg_hero_large/v1/editorial/2020-Audi-A6-55-TFSI-Quattro-S-Line-sedan-black-James-Cleary-1200x800p-%281%29.jpg"},
+                new CarOfferImagesResponseModel { ImageUrl = "https://www.autocar.co.uk/sites/autocar.co.uk/files/1-audi-a6-tfsie-2022-road-test-review-lead.jpg"},
+            });
+        }
     }
 }
