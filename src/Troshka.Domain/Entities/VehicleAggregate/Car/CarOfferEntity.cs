@@ -10,5 +10,7 @@ namespace Troshka.Domain.Entities.VehicleAggregate.Car
         public virtual OwnerEntity Owner { get; set; }
         public virtual CarSpecificationEntity Specification { get; set; }
         public virtual CarEquipmentEntity Equipment { get; set; }
+        public virtual CarCoupeEntity Coupe { get; set; }
+        public virtual CarFuelTypeEntity FuelType { get; set; }
     }
 }

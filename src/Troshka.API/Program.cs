@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using Troshka.Application;
 using Troshka.Application.Interfaces;
+using Troshka.Domain.Entities.VehicleAggregate.Car;
 using Troshka.Infrastructure.Data;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -49,7 +52,7 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // ODATA
-builder.Services.AddControllers().AddOData(opt => opt.Count().Filter().Expand().Select().OrderBy().SetMaxTop(10));
+builder.Services.AddControllers().AddOData(opt => opt.Count().Filter().Expand().Select().OrderBy().SetMaxTop(20));
 
 // Data
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -156,3 +159,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
+
+IEdmModel GetEdmModelForCarOffers()
+{
+    ODataConventionModelBuilder builder = new();
+    builder.EntitySet<CarOfferEntity>("CarOffers");
+    return builder.GetEdmModel();
+}

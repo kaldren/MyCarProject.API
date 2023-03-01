@@ -19,5 +19,7 @@
         public virtual CarBrandEntity Brand { get; set; }
         public string ModelId { get; set; }
         public virtual CarModelEntity Model { get; set; }
+        public virtual CarCoupeEntity Coupe { get; set; }
+        public virtual CarFuelTypeEntity FuelType { get; set; }
     }
 }

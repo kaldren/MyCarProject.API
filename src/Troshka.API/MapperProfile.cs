@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+using Troshka.API.Models.Response.Car;
 using Troshka.API.Models.Response.Offer;
+using Troshka.API.Models.Response.Vehicle;
+using Troshka.Application.Car.Models;
+using Troshka.Application.Category.Models;
 using Troshka.Application.Offer.Models;
 
 namespace Troshka.API
@@ -9,6 +13,7 @@ namespace Troshka.API
         public MapperProfile()
         {
             #region Car
+            CreateMap<CarBrandModel, CarBrandResponseModel>();
             CreateMap<CarOfferModel, CarOfferResponseModel>()
             // Specification
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
@@ -115,6 +120,10 @@ namespace Troshka.API
             .ForMember(dest => dest.HasEmergencyTireKit, opt => opt.MapFrom(src => src.Equipment.HasEmergencyTireKit))
             .ForMember(dest => dest.HasPanoramicRoof, opt => opt.MapFrom(src => src.Equipment.HasPanoramicRoof));
             #endregion Car
+
+            #region Vehicles (Generic)
+            CreateMap<CategoryModel, CategoryResponseModel>();
+            #endregion Vehicles (Generic)
         }
     }
 }

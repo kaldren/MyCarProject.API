@@ -28,6 +28,8 @@ namespace Troshka.Infrastructure.Data
         public DbSet<CarSeatsEntity> CarSeats { get; set; }
         public DbSet<CarSpecificationEntity> CarSpecification { get; set; }
         public DbSet<CarTransmissionEntity> CarTransmission { get; set; }
+        public DbSet<CarCoupeEntity> CarCoupe { get; set; }
+        public DbSet<CarFuelTypeEntity> CarFuelType { get; set; }
         #endregion Cars
 
         public TroshkaDbContext(DbContextOptions<TroshkaDbContext> options) : base(options)
@@ -167,6 +169,38 @@ namespace Troshka.Infrastructure.Data
                     new CarTransmissionEntity { Name = "Automatic" },
                     new CarTransmissionEntity { Name = "Semi-automatic" },
                     new CarTransmissionEntity { Name = "Manual" }
+                );
+
+            modelBuilder
+                .Entity<CarCoupeEntity>()
+                .ToTable("Coupe", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarCoupeEntity>()
+                .HasData(
+                    new CarCoupeEntity { Id = "3GLNa5pkWPOWVuSdVjdX", Name = "Sedan" },
+                    new CarCoupeEntity { Id = "JD9wmJVdkgyRHCXjCs7V", Name = "Hatchback" },
+                    new CarCoupeEntity { Id = "ZfEvTe27FGIJe7I1eQkG", Name = "Station Wagon" },
+                    new CarCoupeEntity { Id = "vqB7n29Zlq6pL8TKKL7j", Name = "Coupe" },
+                    new CarCoupeEntity { Id = "17uwRnksm3dHVtGXjxg8", Name = "Convertible" },
+                    new CarCoupeEntity { Id = "pPrhSk2DBNYBz6sCoF81", Name = "Jeep" },
+                    new CarCoupeEntity { Id = "xrAUDYo0LOc0HQWGSXVW", Name = "Pickup Truck" },
+                    new CarCoupeEntity { Id = "qpfpQc2ba4RuH4SUb2uI", Name = "Van" }
+                );
+
+            modelBuilder
+                .Entity<CarFuelTypeEntity>()
+                .ToTable("FuelType", schema: SchemaNames.Cars);
+
+            modelBuilder
+                .Entity<CarFuelTypeEntity>()
+                .HasData(
+                    new CarFuelTypeEntity { Id = "H0O1gQTAJUmnQ3Yu6xja", Name = "Gasoline" },
+                    new CarFuelTypeEntity { Id = "EakI7nFXqVnZ7EK18OjR", Name = "Diesel" },
+                    new CarFuelTypeEntity { Id = "PiVQdoqtANVLWXxOKUb6", Name = "Gas/Petrol" },
+                    new CarFuelTypeEntity { Id = "ihfaIGYf8FtKla37Q7lk", Name = "Methane/Gasoline" },
+                    new CarFuelTypeEntity { Id = "aavmD9iPT7tmzKpLIsby", Name = "Hybrid" },
+                    new CarFuelTypeEntity { Id = "kWWyvBE2tRlQy4RibmuD", Name = "Electricity" }
                 );
 
             modelBuilder
