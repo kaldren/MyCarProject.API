@@ -11,12 +11,12 @@ public class GetLocationsQuery : IRequest<ICollection<LocationModel>>
     public string RegionId { get; set; }
 }
 
-public class GetLocationsQueryQueryHandler : IRequestHandler<GetLocationsQuery, ICollection<LocationModel>>
+public class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, ICollection<LocationModel>>
 {
     private readonly IGenericRepository<LocationEntity> _locationRepo;
     private readonly IMapper _mapper;
 
-    public GetLocationsQueryQueryHandler(IGenericRepository<LocationEntity> locationRepo, IMapper mapper)
+    public GetLocationsQueryHandler(IGenericRepository<LocationEntity> locationRepo, IMapper mapper)
     {
         _locationRepo = locationRepo;
         _mapper = mapper;

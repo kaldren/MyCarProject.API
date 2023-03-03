@@ -32,6 +32,7 @@ namespace Troshka.Application
 
             CreateMap<CategoryEntity, CategoryModel>();
             CreateMap<OwnerEntity, OwnerModel>();
+            CreateMap<RegionEntity, RegionModel>();
             CreateMap<LocationEntity, LocationModel>();
         }
     }

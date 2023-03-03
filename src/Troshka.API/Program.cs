@@ -52,7 +52,7 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // ODATA
-builder.Services.AddControllers().AddOData(opt => opt.Count().Filter().Expand().Select().OrderBy().SetMaxTop(20));
+builder.Services.AddControllers().AddOData(opt => opt.Count().Filter().Expand().Select().OrderBy().SetMaxTop(10));
 
 // Data
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

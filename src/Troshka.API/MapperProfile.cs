@@ -126,6 +126,7 @@ namespace Troshka.API
 
             #region Vehicles (Generic)
             CreateMap<CategoryModel, CategoryResponseModel>();
+            CreateMap<RegionModel, RegionResponseModel>();
             CreateMap<LocationModel, LocationResponseModel>();
             #endregion Vehicles (Generic)
         }

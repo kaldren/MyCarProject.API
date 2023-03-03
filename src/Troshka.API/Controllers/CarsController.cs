@@ -37,7 +37,7 @@ namespace Troshka.API.Controllers
         /// </summary>
         /// <returns>The car offers</returns>
         [HttpGet("offers")]
-        [EnableQuery(PageSize = 5)]
+        [EnableQuery(PageSize = 10)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

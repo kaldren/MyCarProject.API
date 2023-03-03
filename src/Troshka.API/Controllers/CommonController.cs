@@ -88,9 +88,28 @@ namespace Troshka.API.Controllers
         }
 
         /// <summary>
-        /// Get location by Area Id
+        /// Get all regions
         /// </summary>
-        /// <returns>All locations in given area</returns>
+        /// <returns>All regions</returns>
+        [HttpGet("regions")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<RegionResponseModel>>> GetRegions()
+        {
+            ICollection<RegionModel> regionsModel = await _mediator.Send(new GetRegionsQuery());
+
+            if (regionsModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<RegionResponseModel>>(regionsModel));
+        }
+
+        /// <summary>
+        /// Get location by region Id
+        /// </summary>
+        /// <returns>All locations in given region</returns>
         [HttpGet("regions/{regionId}/locations")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

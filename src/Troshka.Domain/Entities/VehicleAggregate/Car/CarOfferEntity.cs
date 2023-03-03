@@ -1,4 +1,5 @@
 ﻿using Troshka.Domain.Entities.OwnerAggregate;
+using Troshka.Domain.Entities.RegionAggregate;
 
 namespace Troshka.Domain.Entities.VehicleAggregate.Car
 {
@@ -12,5 +13,7 @@ namespace Troshka.Domain.Entities.VehicleAggregate.Car
         public virtual CarEquipmentEntity Equipment { get; set; }
         public virtual CarCoupeEntity Coupe { get; set; }
         public virtual CarFuelTypeEntity FuelType { get; set; }
+        public virtual RegionEntity Region { get; set; }
+        public virtual LocationEntity Location { get; set; }
     }
 }

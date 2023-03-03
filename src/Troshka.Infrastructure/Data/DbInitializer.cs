@@ -22,6 +22,8 @@ public static class DbInitializer
         var transmission = TroshkaDbContext.CarTransmission.Single(p => p.Name == "Automatic");
         var coupe = TroshkaDbContext.CarCoupe.Single(p => p.Name == "Sedan");
         var fuelType = TroshkaDbContext.CarFuelType.Single(p => p.Name == "Diesel");
+        var region = TroshkaDbContext.Region.Single(p => p.Name == "Велико Търново");
+        var location = TroshkaDbContext.Location.Single(p => p.Name == "гр. Горна Оряховица");
 
         // Create one car offer
         for (int i = 0; i < 50; i++)
@@ -84,7 +86,9 @@ public static class DbInitializer
                     HasXenonHeadlights = true,
                 },
                 Coupe = coupe,
-                FuelType = fuelType
+                FuelType = fuelType,
+                Region = region,
+                Location = location
             };
 
             TroshkaDbContext.CarOffer.Add(offer);
