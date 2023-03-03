@@ -4,6 +4,7 @@ using Troshka.Application.Category.Models;
 using Troshka.Application.Offer.Models;
 using Troshka.Application.Owner.Models;
 using Troshka.Domain.Entities.OwnerAggregate;
+using Troshka.Domain.Entities.RegionAggregate;
 using Troshka.Domain.Entities.VehicleAggregate;
 using Troshka.Domain.Entities.VehicleAggregate.Car;
 
@@ -31,6 +32,7 @@ namespace Troshka.Application
 
             CreateMap<CategoryEntity, CategoryModel>();
             CreateMap<OwnerEntity, OwnerModel>();
+            CreateMap<LocationEntity, LocationModel>();
         }
     }
 }

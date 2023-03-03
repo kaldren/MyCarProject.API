@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using Troshka.API.Models.Response.Vehicle;
 using Troshka.Application.Category.Models;
 using Troshka.Application.Category.Queries;
+using Troshka.Application.Offer.Models;
+using Troshka.Application.Region.Queries;
 
 namespace Troshka.API.Controllers
 {
@@ -14,12 +16,12 @@ namespace Troshka.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    public class VehiclesController : ControllerBase
+    public class CommonController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public VehiclesController(IMediator mediator, IMapper mapper)
+        public CommonController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -55,7 +57,7 @@ namespace Troshka.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<ICollection<VehicleImageResponseModel>>> GetVehicleImages([FromRoute][Required] long vehicleId)
+        public async Task<ActionResult<ICollection<VehicleImageResponseModel>>> GetVehicleImages([FromRoute][Required] string vehicleId)
         {
             return Ok(new List<VehicleImageResponseModel>
             {
@@ -75,7 +77,7 @@ namespace Troshka.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<VehicleOwnerResponseModel>> GetVehicleOwner([FromRoute][Required] long vehicleId)
+        public async Task<ActionResult<VehicleOwnerResponseModel>> GetVehicleOwner([FromRoute][Required] string vehicleId)
         {
             return Ok(new VehicleOwnerResponseModel
             {
@@ -83,6 +85,25 @@ namespace Troshka.API.Controllers
                 DisplayName = "Kaloyan Drenski",
                 Phone = "0888 77 88 77"
             });
+        }
+
+        /// <summary>
+        /// Get location by Area Id
+        /// </summary>
+        /// <returns>All locations in given area</returns>
+        [HttpGet("regions/{regionId}/locations")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<LocationResponseModel>>> GetLocations([FromRoute][Required] string regionId)
+        {
+            ICollection<LocationModel> locationsModel = await _mediator.Send(new GetLocationsQuery() { RegionId = regionId });
+
+            if (locationsModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<LocationResponseModel>>(locationsModel));
         }
     }
 }
