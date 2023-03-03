@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Troshka.Domain\Troshka.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
 </Project>

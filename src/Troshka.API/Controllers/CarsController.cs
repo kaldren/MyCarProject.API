@@ -7,9 +7,8 @@ using Microsoft.Identity.Web.Resource;
 using System.ComponentModel.DataAnnotations;
 using Troshka.API.Models.Response.Car;
 using Troshka.API.Models.Response.Offer;
-using Troshka.API.Models.Response.Vehicle;
 using Troshka.Application.Car.Models;
-using Troshka.Application.Category.Queries;
+using Troshka.Application.Car.Queries;
 using Troshka.Application.Offer.Models;
 using Troshka.Application.Offer.Queries.GetSingleCarOffer;
 using Troshka.Domain.Entities.VehicleAggregate.Car;
@@ -19,7 +18,7 @@ namespace Troshka.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/offers/[controller]")]
+    [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class CarsController : ControllerBase
     {
@@ -37,7 +36,7 @@ namespace Troshka.API.Controllers
         /// Get list of car offers
         /// </summary>
         /// <returns>The car offers</returns>
-        [HttpGet]
+        [HttpGet("offers")]
         [EnableQuery(PageSize = 5)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -53,7 +52,7 @@ namespace Troshka.API.Controllers
         /// </summary>
         /// <param name="offerId">The Id of the offer</param>
         /// <returns>The offer</returns>
-        [HttpGet("{offerId}")]
+        [HttpGet("offers/{offerId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,7 +72,7 @@ namespace Troshka.API.Controllers
         /// </summary>
         /// <param name="offerId">The Id of the offer</param>
         /// <returns>The offer</returns>
-        [HttpGet("{offerId}/images")]
+        [HttpGet("offers/{offerId}/images")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,23 +88,79 @@ namespace Troshka.API.Controllers
         }
 
         /// <summary>
-        /// Get brands by <paramref name="categoryId"/>
+        /// Get all car brands
         /// </summary>
-        /// <param name="categoryId">Category Id</param>
-        /// <returns>Brands</returns>
+        /// <returns>All car brands</returns>
         [HttpGet("brands")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<ICollection<CategoryResponseModel>>> GetCarBrands()
+        public async Task<ActionResult<ICollection<CarBrandResponseModel>>> GetCarBrands()
         {
-            ICollection<CarBrandModel> categoryModel = await _mediator.Send(new GetCarBrandsQuery() { });
+            ICollection<CarBrandModel> carBrand = await _mediator.Send(new GetCarBrandsQuery() { });
 
-            if (categoryModel == null)
+            if (carBrand == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ICollection<CarBrandResponseModel>>(categoryModel));
+            return Ok(_mapper.Map<ICollection<CarBrandResponseModel>>(carBrand));
+        }
+
+        /// <summary>
+        /// Get all car models by brandId
+        /// </summary>
+        /// <returns>All car models</returns>
+        [HttpGet("brands/{brandId}/models")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarModelResponseModel>>> GetCarModels([FromRoute][Required] string brandId)
+        {
+            ICollection<CarModelModel> carModel = await _mediator.Send(new GetCarModelsQuery() { BrandId = brandId });
+
+            if (carModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<CarModelResponseModel>>(carModel));
+        }
+
+        /// <summary>
+        /// Get all car engines
+        /// </summary>
+        /// <returns>All car models</returns>
+        [HttpGet("engines")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarEngineResponseModel>>> GetCarEnginesModels()
+        {
+            ICollection<CarEngineModel> carEngineModel = await _mediator.Send(new GetCarEnginesModelQuery());
+
+            if (carEngineModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<CarEngineResponseModel>>(carEngineModel));
+        }
+
+        /// <summary>
+        /// Get all car transmissions
+        /// </summary>
+        /// <returns>All car transmissions</returns>
+        [HttpGet("transmissions")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarTransmissionResponseModel>>> GetCarTransmissionModels()
+        {
+            ICollection<CarTransmissionModel> carTransmissionModel = await _mediator.Send(new GetCarTransmissionModelQuery());
+
+            if (carTransmissionModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<CarTransmissionResponseModel>>(carTransmissionModel));
         }
     }
 }

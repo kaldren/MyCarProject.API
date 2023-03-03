@@ -18,6 +18,7 @@ namespace Troshka.Application
             CreateMap<CarColorEntity, CarColorModel>();
             CreateMap<CarDoorsEntity, CarDoorsModel>();
             CreateMap<CarEngineEntity, CarEngineModel>();
+            CreateMap<CarTransmissionEntity, CarTransmissionModel>();
             CreateMap<CarEquipmentEntity, CarEquipmentModel>();
             CreateMap<CarEuroStandardEntity, CarEuroStandardModel>();
             CreateMap<CarInteriorMaterialEntity, CarInteriorMaterialModel>();

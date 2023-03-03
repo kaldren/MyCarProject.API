@@ -4,7 +4,7 @@ using Troshka.Application.Car.Models;
 using Troshka.Application.Interfaces;
 using Troshka.Domain.Entities.VehicleAggregate.Car;
 
-namespace Troshka.Application.Category.Queries;
+namespace Troshka.Application.Car.Queries;
 
 public class GetCarBrandsQuery : IRequest<ICollection<CarBrandModel>>
 {
