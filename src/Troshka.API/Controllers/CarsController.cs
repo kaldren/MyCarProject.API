@@ -231,28 +231,9 @@ namespace Troshka.API.Controllers
                     .WithAuthority(new Uri($"{_config["AzureAd:Instance"]}/{_config["AzureAd:TenantId"]}"))
                     .Build();
 
-                try
-                {
-                    var authResult = await app.AcquireTokenForClient(new string[] { "https://graph.microsoft.com/.default" })
-                        .ExecuteAsync();
-                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
-
-                }
-                catch (MsalUiRequiredException ex)
-                {
-                    // The application doesn't have sufficient permissions.
-                    // - Did you declare enough app permissions during app creation?
-                    // - Did the tenant admin grant permissions to the application?
-                }
-                catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011"))
-                {
-                    // Invalid scope. The scope has to be in the form "https://resourceurl/.default"
-                    // Mitigation: Change the scope to be as expected.
-                }
-                catch (Exception ex)
-                {
-
-                }
+                var authResult = await app.AcquireTokenForClient(new string[] { "https://graph.microsoft.com/.default" })
+                    .ExecuteAsync();
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
 
             }));
 
