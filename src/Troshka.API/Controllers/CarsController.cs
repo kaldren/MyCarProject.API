@@ -3,8 +3,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.Resource;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http.Headers;
+using Troshka.API.Models.Request;
 using Troshka.API.Models.Response.Car;
 using Troshka.API.Models.Response.Offer;
 using Troshka.Application.Car.Models;
@@ -13,6 +18,7 @@ using Troshka.Application.Offer.Models;
 using Troshka.Application.Offer.Queries.GetSingleCarOffer;
 using Troshka.Domain.Entities.VehicleAggregate.Car;
 using Troshka.Infrastructure.Data;
+using Troshka.Infrastructure.Interfaces;
 
 namespace Troshka.API.Controllers
 {
@@ -25,19 +31,25 @@ namespace Troshka.API.Controllers
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly TroshkaDbContext _troshkaRepo;
+        private readonly ITokenAcquisition _tokenAcquisition;
+        private readonly IMsGraphService _msGraphService;
+        private readonly IConfiguration _config;
 
-        public CarsController(IMediator mediator, IMapper mapper, TroshkaDbContext troshkaRepo)
+        public CarsController(IMediator mediator, IMapper mapper, TroshkaDbContext troshkaRepo, ITokenAcquisition tokenAcquisition, IMsGraphService msGraphService, IConfiguration config)
         {
             _mediator = mediator;
             _mapper = mapper;
             _troshkaRepo = troshkaRepo;
+            _tokenAcquisition = tokenAcquisition;
+            _msGraphService = msGraphService;
+            _config = config;
         }
         /// <summary>
         /// Get list of car offers
         /// </summary>
         /// <returns>The car offers</returns>
         [HttpGet("offers")]
-        [EnableQuery(PageSize = 10)]
+        [EnableQuery(PageSize = 10, MaxNodeCount = 1000)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -161,6 +173,105 @@ namespace Troshka.API.Controllers
                 return NotFound();
 
             return Ok(_mapper.Map<ICollection<CarTransmissionResponseModel>>(carTransmissionModel));
+        }
+
+        /// <summary>
+        /// Get all car transmissions
+        /// </summary>
+        /// <returns>All car transmissions</returns>
+        [HttpGet("categories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarCategoryResponseModel>>> GetCategories()
+        {
+            ICollection<CarCategoryModel> standardModel = await _mediator.Send(new GetCarCategoriesQuery());
+
+            if (standardModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<CarCategoryResponseModel>>(standardModel));
+        }
+
+        /// <summary>
+        /// Get euro standard
+        /// </summary>
+        /// <returns>Euro standards</returns>
+        [HttpGet("euro")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<ICollection<CarEuroStandardResponseModel>>> GetVehicleEuroStandard()
+        {
+            ICollection<CarEuroStandardModel> standardModel = await _mediator.Send(new GetCarEuroStandardsQuery());
+
+            if (standardModel == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<ICollection<CarEuroStandardResponseModel>>(standardModel));
+        }
+
+        /// <summary>
+        /// Post new car offer
+        /// </summary>
+        [HttpPost("offers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
+        public async Task<ActionResult<CarOfferResponseModel>> CreateCarOffer([FromBody][Required] CreateCarOfferRequestModel model)
+        {
+            var graphClient = new GraphServiceClient(new DelegateAuthenticationProvider(async (requestMessage) =>
+            {
+                var app = ConfidentialClientApplicationBuilder
+                    .Create(_config["AzureAd:ClientId"])
+                    .WithClientSecret(_config["AzureAd:ClientSecret"])
+                    .WithAuthority(new Uri($"{_config["AzureAd:Instance"]}/{_config["AzureAd:TenantId"]}"))
+                    .Build();
+
+                try
+                {
+                    var authResult = await app.AcquireTokenForClient(new string[] { "https://graph.microsoft.com/.default" })
+                        .ExecuteAsync();
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+
+                }
+                catch (MsalUiRequiredException ex)
+                {
+                    // The application doesn't have sufficient permissions.
+                    // - Did you declare enough app permissions during app creation?
+                    // - Did the tenant admin grant permissions to the application?
+                }
+                catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011"))
+                {
+                    // Invalid scope. The scope has to be in the form "https://resourceurl/.default"
+                    // Mitigation: Change the scope to be as expected.
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }));
+
+            var users = await graphClient.Users
+                .Request()
+                .Select(u => new
+                {
+                    u.Id,
+                    u.DisplayName,
+                    u.UserPrincipalName,
+                    u.Mail,
+                    u.JobTitle
+                })
+                .GetAsync();
+
+            var userTenant = User.GetTenantId();
+            var graphAccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new string[] { "https://graph.microsoft.com/.default" }, tenantId: userTenant);
+            var x = await _msGraphService.GetUsersAsync(graphAccessToken);
+            return null;
         }
     }
 }

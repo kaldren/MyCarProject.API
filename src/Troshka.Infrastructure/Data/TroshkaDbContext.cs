@@ -5604,6 +5604,25 @@ public class TroshkaDbContext : DbContext
             .ToTable("Equipment", schema: SchemaNames.Cars);
 
         modelBuilder
+            .Entity<CarCategoryEntity>()
+            .ToTable("Categories", schema: SchemaNames.Cars);
+
+        modelBuilder
+            .Entity<CarCategoryEntity>()
+            .HasData(
+                new CarCategoryEntity { Id = "06MxFkB3AzzzVraVWN1u", Name = "Van" },
+                new CarCategoryEntity { Id = "06MxFkB3AuuuVraVWN1u", Name = "Jeep" },
+                new CarCategoryEntity { Id = "06MxFkB3AyyyVraVWN1u", Name = "Convertible" },
+                new CarCategoryEntity { Id = "06MxFkB3AxxxVraVWN1u", Name = "Station wagon" },
+                new CarCategoryEntity { Id = "06MxFkB3AaaaVraVWN1u", Name = "Coupe" },
+                new CarCategoryEntity { Id = "06MxFkB3AsssVraVWN1u", Name = "Minivan" },
+                new CarCategoryEntity { Id = "06MxFkB3ApppVraVWN1u", Name = "Pickup truck" },
+                new CarCategoryEntity { Id = "06MxFkB3AlllVraVWN1u", Name = "Sedan" },
+                new CarCategoryEntity { Id = "06MxFkB3AmmmVraVWN1u", Name = "Stretch limo" },
+                new CarCategoryEntity { Id = "06MxFkB3AwwwVraVWN1u", Name = "Hatchback" }
+            );
+
+        modelBuilder
             .Entity<CarBrandEntity>()
             .ToTable("Brands", schema: SchemaNames.Cars);
 

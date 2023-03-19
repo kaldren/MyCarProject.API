@@ -16,6 +16,7 @@ namespace Troshka.Application
         {
             #region Car
             CreateMap<CarBrandEntity, CarBrandModel>();
+            CreateMap<CarCategoryEntity, CarCategoryModel>();
             CreateMap<CarColorEntity, CarColorModel>();
             CreateMap<CarDoorsEntity, CarDoorsModel>();
             CreateMap<CarEngineEntity, CarEngineModel>();

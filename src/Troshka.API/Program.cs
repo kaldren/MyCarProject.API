@@ -9,6 +9,8 @@ using Troshka.Application;
 using Troshka.Application.Interfaces;
 using Troshka.Domain.Entities.VehicleAggregate.Car;
 using Troshka.Infrastructure.Data;
+using Troshka.Infrastructure.Interfaces;
+using Troshka.Infrastructure.Services;
 using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +31,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSingleton<IMsGraphService, MsGraphService>();
 // CORS
 builder.Services.AddCors(options =>
 {
@@ -110,6 +112,7 @@ if (app.Environment.IsDevelopment())
             logger.LogDebug("Seeding data...");
             var dataContext = scope.ServiceProvider.GetRequiredService<TroshkaDbContext>();
             dataContext.Database.EnsureDeleted();
+            dataContext.Database.EnsureCreated();
             dataContext.Database.Migrate();
             DbInitializer.Initialize(dataContext, logger);
             logger.LogDebug("Seed data inserted successfully...");

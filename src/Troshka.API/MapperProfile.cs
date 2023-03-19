@@ -17,6 +17,8 @@ namespace Troshka.API
             CreateMap<CarModelModel, CarModelResponseModel>();
             CreateMap<CarEngineModel, CarEngineResponseModel>();
             CreateMap<CarTransmissionModel, CarTransmissionResponseModel>();
+            CreateMap<CarEuroStandardModel, CarEuroStandardResponseModel>();
+            CreateMap<CarCategoryModel, CarCategoryResponseModel>();
             CreateMap<CarOfferModel, CarOfferResponseModel>()
             // Specification
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
