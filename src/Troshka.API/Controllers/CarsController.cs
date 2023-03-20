@@ -3,12 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using Microsoft.Graph;
-using Microsoft.Identity.Client;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.Resource;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Http.Headers;
 using Troshka.API.Models.Request;
 using Troshka.API.Models.Response.Car;
 using Troshka.API.Models.Response.Offer;
@@ -25,7 +22,7 @@ namespace Troshka.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+    [RequiredScope("Onebrb.Read")]
     public class CarsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -220,38 +217,10 @@ namespace Troshka.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [AllowAnonymous]
         public async Task<ActionResult<CarOfferResponseModel>> CreateCarOffer([FromBody][Required] CreateCarOfferRequestModel model)
         {
-            var graphClient = new GraphServiceClient(new DelegateAuthenticationProvider(async (requestMessage) =>
-            {
-                var app = ConfidentialClientApplicationBuilder
-                    .Create(_config["AzureAd:ClientId"])
-                    .WithClientSecret(_config["AzureAd:ClientSecret"])
-                    .WithAuthority(new Uri($"{_config["AzureAd:Instance"]}/{_config["AzureAd:TenantId"]}"))
-                    .Build();
-
-                var authResult = await app.AcquireTokenForClient(new string[] { "https://graph.microsoft.com/.default" })
-                    .ExecuteAsync();
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
-
-            }));
-
-            var users = await graphClient.Users
-                .Request()
-                .Select(u => new
-                {
-                    u.Id,
-                    u.DisplayName,
-                    u.UserPrincipalName,
-                    u.Mail,
-                    u.JobTitle
-                })
-                .GetAsync();
-
-            var userTenant = User.GetTenantId();
-            var graphAccessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new string[] { "https://graph.microsoft.com/.default" }, tenantId: userTenant);
-            var x = await _msGraphService.GetUsersAsync(graphAccessToken);
+            var currentUser = HttpContext.User;
+            var user = await _msGraphService.GetUserAsync("d34c2190-744c-47fa-8610-f399caca4f48");
             return null;
         }
     }
